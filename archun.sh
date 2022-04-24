@@ -1,6 +1,15 @@
 #!/bin/bash
 # archun by github.com/TechKeep
 
+startCustomInstProcess() {
+	echo "You have selected the AUTOMATIC process."
+	echo "!! WARNING !! - EVERYTHING will be ERASED on this device."
+	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
+	read -p "Last warning. Are you sure? Press ENTER to proceed."
+
+}
+
+
 mainMenu() {
   echo "- - ArchUn: Part 1 - -"
   echo "ArchUn is an automatic ArchLinux install script."
