@@ -104,6 +104,7 @@ mainMenu() {
 	      "Proceed")
 	          startAutomaticInstProcess
 	          clear
+	          rm /mnt/archun2.sh
 	          echo "..."
 	          echo "The installation should now be complete. If something"
 	          echo "didn't work properly, you can still do 'arch-chroot /mnt'"
