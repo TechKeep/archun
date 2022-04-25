@@ -30,7 +30,6 @@ if [$USERBIOSTYPE == "bios"]; then
 		sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
 		sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
 	}
-
 else
 	createThePartitions() {
 		# Boot partition size. # Total size: 300MiB
