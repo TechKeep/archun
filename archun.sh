@@ -2,82 +2,38 @@
 # ArchUn by github.com/TechKeep
 
 ######################################
-#### These values are for testing.####
-#### They will be definable later ####
-#### and a lot of these comments  ####
-#### will be deleted.             ####
+#### User-defined variables START ####
 ######################################
 
-# Time zone
-TIMEZONESTRING="America/Toronto"
+TIMEZONESTRING="America/Toronto" # Time zone
+LOCALEGEN="en_CA.UTF-8 UTF-8" # Locale
+LOCALELANG="LANG=en_CA.UTF-8" # Locale
+THEHOSTNAME="arch" # Hostname
+DEFAULTDISK="/dev/sda" # Disk (find out with "fdisk -l")
 
-# Locale
-LOCALEGEN="en_CA.UTF-8 UTF-8"
-LOCALELANG="LANG=en_CA.UTF-8"
+# Boot partition size. # Total size: 300MiB
+BOOTPARTSTART="16MiB" # Starts at position 16MiB
+BOOTPARTEND="316MiB" # Ends at position 316MiB
 
-# Hostname
-THEHOSTNAME="arch"
+# Swap partition size. # Total size: 4096MiB
+SWAPPARTSTART="317MiB" # Starts at position 317MiB
+SWAPPARTEND="4413MiB" # Ends at position 4413MiB
 
-# Type of BIOS. Either "gpt" or "bios".
-USERBIOSTYPE="gpt" # WARNING: Only GPT is supported right now
+# Root partition size. # Total size: rest of disk
+ROOTPARTSTART="4414MiB" # Starts at position 4414MiB
+ROOTPARTEND="100%" # Ends at the end of the disk
 
-# The default disk (find out with "fdisk -l")
-DEFAULTDISK="/dev/sda"
+######################################
+####  User-defined variables END  ####
+######################################
+
+# I'll calculate sizes automatically
+# once I'm done and everything works
 
 # Naming each variable for which is which to make it easier
 BOOTPARTNUM="1"
 SWAPPARTNUM="2"
 ROOTPARTNUM="3"
-
-# I'll calculate sizes automatically
-# once I'm done and everything works
-if [ "$USERBIOSTYPE" == "gpt" ]; then
-	createThePartitions() {
-		# Boot partition size. # Total size: 300MiB
-		BOOTPARTSTART="16MiB" # Starts at position 16MiB
-		BOOTPARTEND="316MiB" # Ends at position 316MiB
-
-		# Swap partition size. # Total size: 4096MiB
-		SWAPPARTSTART="317MiB" # Starts at position 317MiB
-		SWAPPARTEND="4413MiB" # Ends at position 4413MiB
-
-		# Root partition size. # Total size: rest of disk
-		ROOTPARTSTART="4414MiB" # Starts at position 4414MiB
-		ROOTPARTEND="100%" # Ends at the end of the disk
-
-		# Create the partitions with provided options
-		sudo parted $DEFAULTDISK --script mklabel gpt # GPT for UEFI
-		sudo parted $DEFAULTDISK --script mkpart primary fat32 $BOOTPARTSTART $BOOTPARTEND
-		sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
-		sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
-		mkfs.ext4 $DEFAULTDISK$ROOTPARTNUM
-		mkswap $DEFAULTDISK$SWAPPARTNUM
-		mkfs.fat -F 32 $DEFAULTDISK$BOOTPARTNUM
-	}
-else
-	createThePartitions() {
-		# MBR currently not supported
-		echo "MBR is currently not supported."
-		echo "Stopping."
-		read -p "Press ENTER to exit."
-		return
-
-		# Swap partition size. # Total size: 4096MiB
-		##SWAPPARTSTART="16MiB" # Starts at position 16MiB
-		##SWAPPARTEND="4112MiB" # Ends at position 4112MiB
-
-		# Root partition size. # Total size: rest of disk
-		##ROOTPARTSTART="4113MiB" # Starts at position 4113MiB
-		##ROOTPARTEND="100%" # Ends at the end of the disk
-
-		# Create the partitions with provided options
-		## #insert line to format to MBR# # MBR for BIOS
-		##sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
-		##sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
-	}
-fi
-
-######################################
 
 startAutomaticInstProcess() {
 	curl https://techkeep.net/archun/archun2.sh -o archun2.sh
@@ -94,8 +50,14 @@ startAutomaticInstProcess() {
 	# Setting date and time
 	timedatectl set-ntp true
 	#timedatectl status # optional, output to verify it's set correctly
-	# Creating the partitions
-	createThePartitions
+	# Creating the partitions with provided options
+	sudo parted $DEFAULTDISK --script mklabel gpt # GPT for UEFI
+	sudo parted $DEFAULTDISK --script mkpart primary fat32 $BOOTPARTSTART $BOOTPARTEND
+	sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
+	sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
+	mkfs.ext4 $DEFAULTDISK$ROOTPARTNUM
+	mkswap $DEFAULTDISK$SWAPPARTNUM
+	mkfs.fat -F 32 $DEFAULTDISK$BOOTPARTNUM
 	# Mounting all drives
 	mount $DEFAULTDISK$ROOTPARTNUM /mnt
 	mount --mkdir $DEFAULTDISK$BOOTPARTNUM /mnt/boot
@@ -112,7 +74,6 @@ startAutomaticInstProcess() {
 	arch-chroot /mnt ./archun2.sh
 }
 
-
 mainMenu() {
   echo "- - ArchUn - -"
   echo "ArchUn is an automatic ArchLinux install script."
@@ -125,6 +86,7 @@ mainMenu() {
       case $opt in
           "Automatic")
               startAutomaticInstProcess
+              read -p "The end"
               ;;
           "Quit")
               exit
