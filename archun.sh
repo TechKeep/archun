@@ -15,8 +15,7 @@ DEFAULTDISK="/dev/sda"
 
 # I'll calculate sizes automatically
 # once I'm done and everything works
-if $USERBIOSTYPE="bios"
-then
+if [$USERBIOSTYPE == "bios"]; then
 	createThePartitions() {
 		# Swap partition size. # Total size: 4096MiB
 		SWAPPARTSTART="16MiB" # Starts at position 16MiB
@@ -57,14 +56,17 @@ fi
 ######################################
 
 startAutomaticInstProcess() {
+	clear
 	echo "You have selected the AUTOMATIC process."
-	echo "!! WARNING !! - EVERYTHING will be ERASED on this device."
+	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
-	echo "Setting date and time"
+	# Setting date and time
 	timedatectl set-ntp true
-	timedatectl status
+	timedatectl status # optional, output to verify it's set correctly
+	# Creating the partitions
 	createThePartitions
+
 }
 
 
@@ -72,7 +74,7 @@ mainMenu() {
   echo "- - ArchUn: Part 1 - -"
   echo "ArchUn is an automatic ArchLinux install script."
   echo "You can either start the script with default settings, or use some custom values."
-  echo "!! WARNING !! - This will ERASE EVERYTHING on the device you're using it from."
+  echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
   PS3='Which process do you want? (ENTER to confirm): '
   options=("Automatic" "Custom" "Continue to Part 2" "Quit")
   select opt in "${options[@]}"
