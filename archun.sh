@@ -63,8 +63,8 @@ startAutomaticInstProcess() {
 	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
 	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
 	clear
-	echo "You have selected the AUTOMATIC process."
-	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
+	echo "\nYou have selected the AUTOMATIC process."
+	echo "!! WARNING !! - EVERYTHING will be ERASED from this device.\n"
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
 	clear
@@ -87,22 +87,23 @@ startAutomaticInstProcess() {
 	# Generate Fstab
 	genfstab -U /mnt >> /mnt/etc/fstap
 	# Use part 2 in chroot
-	echo "Time to chroot"
+	#echo "Time to chroot"
 	#arch-chroot /mnt /bin/bash -e -x /archun2.sh
 	cp archun2.sh /mnt/archun2.sh
 	chmod +x /mnt/archun2.sh
-	clear
 	arch-chroot /mnt ./archun2.sh
 }
 
 mainMenu() {
-	echo "- - ArchUn - -"
+	echo "\n- - ArchUn - -"
 	echo "ArchUn is an automatic ArchLinux install script."
+	echo "It is meant as a quick method of creating ArchLinux virtual machines."
 	echo "You can either start the script with default settings, or use some custom values."
-	echo "If you want to edit the default settings, exit the script and read the GitHub repo to see how."
+	# TODO: add a built-in way of editing the settings without having to edit the script.
+	echo "If you want to edit the default settings, check out the related post to see how."
 	echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
-	echo "..."
-	PS3='Choose a number and press ENTER to confirm: '
+	echo "\n"
+	PS3="Choose an option's number and press ENTER to confirm: "
 	options=("Proceed" "Quit")
 	select opt in "${options[@]}"
 	do
@@ -111,19 +112,17 @@ mainMenu() {
 	          startAutomaticInstProcess
 	          clear
 	          rm /mnt/archun2.sh
-	          echo "..."
-	          echo "The installation should now be complete. If something"
+	          echo "\n\nThe installation should now be complete. If something"
 	          echo "didn't work properly, you can still do 'arch-chroot /mnt'"
 	          echo "right now to fix it manually."
 	          echo "If everything seemed fine, you can eject the"
-	          echo "installation media and reboot the machine."
-	          echo "..."
+	          echo "installation media and reboot the machine.\n\n"
 	          exit
 	          ;;
 	      "Quit")
 	          exit
 	          ;;
-	      *) echo "invalid option $REPLY";;
+	      *) echo "Invalid option. $REPLY";;
 	  esac
 	done
 }
