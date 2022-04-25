@@ -35,18 +35,25 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # Choose
 PS3='Which process do you want? (ENTER to confirm): '
-options=("default" "i386-pc" "x86_64-efi")
+options=("default" "default-force" "i386-pc" "x86_64-efi")
 select opt in "${options[@]}"
 do
   case $opt in
   	  "default")
           grub-install /dev/sda
+          return
+          ;;
+  	  "default-force")
+          grub-install --force /dev/sda
+          return
           ;;
       "i386-pc")
           grub-install --force --target=i386-pc --recheck $DEFAULTDISK
+          return
           ;;
       "x86_64-efi")
           grub-install --target=x86_64-efi --efi-directory=/boot --recheck $DEFAULTDISK
+          return
           ;;
       *) echo "invalid option $REPLY";;
   esac
