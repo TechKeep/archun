@@ -89,11 +89,12 @@ mainMenu() {
 	      "Proceed")
 	          startAutomaticInstProcess
 	          clear
-	          echo "The installation should now be complete."
-	          echo "If something didn't work properly, you can"
-	          echo "still do 'arch-chroot /mnt' right now to"
-	          echo "fix it manually."
-	          read -p "Press ENTER to continue."
+	          echo "..."
+	          echo "The installation should now be complete. If something"
+	          echo "didn't work properly, you can still do"
+	          echo "'arch-chroot /mnt'"
+	          echo "right now to fix it manually."
+	          echo "..."
 	          exit
 	          ;;
 	      "Quit")
