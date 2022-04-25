@@ -80,9 +80,9 @@ startAutomaticInstProcess() {
 	# Creating the partitions
 	createThePartitions
 	# Mounting all drives
-	mount $ROOTPARTDISK /mnt
-	mount --mkdir $BOOTPARTDISK /mnt/boot
-	swapon $SWAPPARTDISK
+	mount $DEFAULTDISK$ROOTPARTNUM /mnt
+	mount --mkdir $DEFAULTDISK$BOOTPARTNUM /mnt/boot
+	swapon $DEFAULTDISK$SWAPPARTNUM
 	# Install base with pacstrap
 	pacstrap /mnt base linux linux-firmware
 	# Generate Fstab
