@@ -5,7 +5,9 @@
 
 
 
-# Values that will be generated:
+# Variables that will be received (with different
+# contents; the following values are the defaults
+# and are only there for reference to make it easier).
 #TIMEZONESTRING="America/Toronto"
 #LOCALEGEN="en_CA.UTF-8 UTF-8"
 #LOCALELANG="LANG=en_CA.UTF-8"
