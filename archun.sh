@@ -56,7 +56,7 @@ fi
 
 ######################################
 
-startCustomInstProcess() {
+startAutomaticInstProcess() {
 	echo "You have selected the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED on this device."
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
