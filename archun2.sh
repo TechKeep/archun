@@ -14,25 +14,31 @@
 
 # Set the time zone
 ln -sf /usr/share/zoneinfo/$TIMEZONESTRING /etc/localtime
+
 # Generating /etc/adjtime
 hwclock --systohc
+
 # Generate locales
 echo $LOCALEGEN >> /etc/locale.gen
 locale-gen
+
 # Select locale
 echo $LOCALELANG >> /etc/locale.conf
+
 # Set the hostname
 echo $THEHOSTNAME >> /etc/hostname
+
 # Initramfs
 mkinitcpio -P
-# Set a root password
-passwd
 
 # Install GRUB
 yes | LC_ALL=en_CA.UTF-8 pacman -Syu grub efibootmgr
 mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
+
+# Set a root password
+passwd
 
 # Choose
 #PS3='Which process do you want? (ENTER to confirm): '

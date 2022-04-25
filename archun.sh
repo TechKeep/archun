@@ -47,9 +47,9 @@ startAutomaticInstProcess() {
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
+	clear
 	# Setting date and time
 	timedatectl set-ntp true
-	#timedatectl status # optional, output to verify it's set correctly
 	# Creating the partitions with provided options
 	sudo parted $DEFAULTDISK --script mklabel gpt # GPT for UEFI
 	sudo parted $DEFAULTDISK --script mkpart primary fat32 $BOOTPARTSTART $BOOTPARTEND
@@ -71,29 +71,37 @@ startAutomaticInstProcess() {
 	#arch-chroot /mnt /bin/bash -e -x /archun2.sh
 	cp archun2.sh /mnt/archun2.sh
 	chmod +x /mnt/archun2.sh
+	clear
 	arch-chroot /mnt ./archun2.sh
 }
 
 mainMenu() {
-  echo "- - ArchUn - -"
-  echo "ArchUn is an automatic ArchLinux install script."
-  echo "You can either start the script with default settings, or use some custom values."
-  echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
-  PS3='Which process do you want? (ENTER to confirm): '
-  options=("Automatic" "Quit")
-  select opt in "${options[@]}"
-  do
-      case $opt in
-          "Automatic")
-              startAutomaticInstProcess
-              read -p "The end"
-              ;;
-          "Quit")
-              exit
-              ;;
-          *) echo "invalid option $REPLY";;
-      esac
-  done
+	echo "- - ArchUn - -"
+	echo "ArchUn is an automatic ArchLinux install script."
+	echo "You can either start the script with default settings, or use some custom values."
+	echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
+	echi "..."
+	PS3='Choose a number and press ENTER to confirm: '
+	options=("Proceed" "Quit")
+	select opt in "${options[@]}"
+	do
+	  case $opt in
+	      "Proceed")
+	          startAutomaticInstProcess
+	          clear
+	          echo "The installation should now be complete."
+	          echo "If something didn't work properly, you can"
+	          echo "still do 'arch-chroot /mnt' right now to"
+	          echo "fix it manually."
+	          read -p "Press ENTER to continue."
+	          exit
+	          ;;
+	      "Quit")
+	          exit
+	          ;;
+	      *) echo "invalid option $REPLY";;
+	  esac
+	done
 }
 
 clear
