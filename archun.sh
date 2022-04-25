@@ -2,8 +2,9 @@
 # ArchUn by github.com/TechKeep
 
 ######################################
-#### User-defined variables START ####
 ######################################
+######################################
+#### User-defined variables START ####
 ######################################
 
 # Time zone and locale
@@ -23,29 +24,34 @@ BOOTPART="300"
 # Swap partition size in MiB. Number only.
 SWAPPART="4096"
 
-# Root partition size in %. Include the %.
+# Root partition size in %. Percentage.
 # NOTICE: You can also use MiB for this one.
-# !!!HOWEVER!!!, it has to be formatted exactly like "1234MiB".
-ROOTPART="100%"
+# !!!HOWEVER!!!, you must specify the symbol manually ("%" or "MiB")
+# in the separate variable named "ROOTPARTENDUNIT" below.
+ROOTPART="100" # WARNING, READ ABOVE
+ROOTPARTSIZETYPE="%" # WARNING, READ ABOVE
 
 ######################################
-######################################
 ####  User-defined variables END  ####
+######################################
+######################################
 ######################################
 
 # Naming each variable for which is which to make it easier
 BOOTPARTNUM="1"
 SWAPPARTNUM="2"
 ROOTPARTNUM="3"
+
+# Do not edit this unless you really know what you're doing.
+# If you don't do EVERYTHING necessary, a lot of storage space
+# will end up wasted inbetween partitions. Everything is in MiB.
 PARTSIZETYPE="MiB"
 
-# Partition size calculation
+# Partition size calculation, relying on MiB.
 BOOTPARTSTART="$((16))"
 BOOTPARTEND="$(($BOOTPARTSTART+$BOOTPART))"
-
 SWAPPARTSTART="$(($BOOTPARTEND+1))"
 SWAPPARTEND="$(($SWAPPARTSTART+$SWAPPART))"
-
 ROOTPARTSTART="$(($SWAPPARTEND+1))"
 ROOTPARTEND="$ROOTPART"
 
@@ -68,7 +74,7 @@ startAutomaticInstProcess() {
 	sudo parted $DEFAULTDISK --script mklabel gpt # GPT for UEFI
 	sudo parted $DEFAULTDISK --script mkpart primary fat32 $BOOTPARTSTART$PARTSIZETYPE $BOOTPARTEND$PARTSIZETYPE
 	sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART$PARTSIZETYPE $SWAPPARTEND$PARTSIZETYPE
-	sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART$PARTSIZETYPE $ROOTPARTEND
+	sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART$PARTSIZETYPE $ROOTPARTEND$ROOTPARTSIZETYPE
 	mkfs.ext4 $DEFAULTDISK$ROOTPARTNUM
 	mkswap $DEFAULTDISK$SWAPPARTNUM
 	mkfs.fat -F 32 $DEFAULTDISK$BOOTPARTNUM
