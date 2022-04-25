@@ -15,7 +15,7 @@ DEFAULTDISK="/dev/sda"
 
 # I'll calculate sizes automatically
 # once I'm done and everything works
-if [$USERBIOSTYPE == "bios"]; then
+if ["$USERBIOSTYPE" == "bios"]; then
 	createThePartitions() {
 		# Swap partition size. # Total size: 4096MiB
 		SWAPPARTSTART="16MiB" # Starts at position 16MiB
