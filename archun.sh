@@ -16,13 +16,25 @@ LOCALELANG="LANG=en_CA.UTF-8" # Locale
 THEHOSTNAME="arch"
 
 # Disk (find out with "fdisk -l")
+# MAKE SURE TO ALSO PAY ATTENTION TO THE VALUES BELOW.
+# PLEASE MAKE SURE YOU UNDERSTAND.
 DEFAULTDISK="/dev/sda"
+
+# Partition variables to append to the DEFAULTDISK variable.
+# This is important, because if you use an NVMe drive and the
+# variable in DEFAULTDISK is, for example, "/dev/nvme0n1", you
+# will need to use "p1", "p2" and "p3" as partition numbers.
+# If your drive is still named similarly to "/dev/sda", then
+# you will need to use "1", "2" and "3" as partition numbers.
+BOOTPARTNUM="1"
+SWAPPARTNUM="2"
+ROOTPARTNUM="3"
 
 # Boot partition size in MiB. Number only.
 BOOTPART="300"
 
 # Swap partition size in MiB. Number only.
-SWAPPART="4096"
+SWAPPART="4000"
 
 # Root partition size in %. Percentage.
 # NOTICE: You can also use MiB for this one.
@@ -36,11 +48,6 @@ ROOTPARTSIZETYPE="%" # WARNING, READ ABOVE
 ######################################
 ######################################
 ######################################
-
-# Naming each variable for which is which to make it easier
-BOOTPARTNUM="1"
-SWAPPARTNUM="2"
-ROOTPARTNUM="3"
 
 # Do not edit this unless you really know what you're doing.
 # If you don't do EVERYTHING necessary, a lot of storage space
@@ -56,7 +63,7 @@ ROOTPARTSTART="$(($SWAPPARTEND+1))"
 ROOTPARTEND="$ROOTPART"
 
 startAutomaticInstProcess() {
-	curl https://raw.github.com/TechKeep/archun/main/archun2.sh -o archun2.sh
+	curl https://raw.githubusercontent.com/TechKeep/archun/main/archun2.sh -o archun2.sh
 	sed -i "3 i TIMEZONESTRING='$TIMEZONESTRING'" archun2.sh
 	sed -i "4 i LOCALEGEN='$LOCALEGEN'" archun2.sh
 	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
