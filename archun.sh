@@ -92,9 +92,10 @@ mainMenu() {
 	          clear
 	          echo "..."
 	          echo "The installation should now be complete. If something"
-	          echo "didn't work properly, you can still do"
-	          echo "'arch-chroot /mnt'"
+	          echo "didn't work properly, you can still do 'arch-chroot /mnt'"
 	          echo "right now to fix it manually."
+	          echo "If everything seemed fine, you can eject the"
+	          echo "installation media and reboot the machine."
 	          echo "..."
 	          exit
 	          ;;
