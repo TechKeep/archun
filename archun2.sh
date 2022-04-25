@@ -29,7 +29,7 @@ mkinitcpio -P
 passwd
 
 # Install GRUB
-pacman -Syu grub efibootmgr
+yes | LC_ALL=en_CA.UTF-8 pacman -Syu grub efibootmgr
 mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
