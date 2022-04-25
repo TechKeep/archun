@@ -79,6 +79,7 @@ mainMenu() {
 	echo "- - ArchUn - -"
 	echo "ArchUn is an automatic ArchLinux install script."
 	echo "You can either start the script with default settings, or use some custom values."
+	echo "If you want to edit the default settings, exit the script and read the GitHub repo to see how."
 	echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
 	echo "..."
 	PS3='Choose a number and press ENTER to confirm: '
