@@ -106,6 +106,7 @@ startAutomaticInstProcess() {
 	# Use part 2 in chroot
 	echo "Time to chroot"
 	#arch-chroot /mnt /bin/bash -e -x /archun2.sh
+	cp archun2.sh /mnt/archun2.sh
 	chmod +x /mnt/archun2.sh
 	arch-chroot /mnt ./archun2.sh
 }
