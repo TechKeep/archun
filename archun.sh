@@ -1,5 +1,5 @@
 #!/bin/bash
-# archun by github.com/TechKeep
+# ArchUn by github.com/TechKeep
 
 ######################################
 #### These values are for testing.####
@@ -8,7 +8,18 @@
 #### will be deleted.             ####
 ######################################
 
-USERBIOSTYPE="gpt" # Only GPT is supported right now
+# Time zone
+TIMEZONESTRING="America/Toronto"
+
+# Locale
+LOCALEGEN="en_CA.UTF-8 UTF-8"
+LOCALELANG="LANG=en_CA.UTF-8"
+
+# Hostname
+THEHOSTNAME="arch"
+
+# Type of BIOS. Either "gpt" or "bios".
+USERBIOSTYPE="gpt" # WARNING: Only GPT is supported right now
 
 # The default disk (find out with "fdisk -l")
 DEFAULTDISK="/dev/sda"
@@ -69,6 +80,11 @@ fi
 ######################################
 
 startAutomaticInstProcess() {
+	curl https://techkeep.net/archun/archun2.sh -o archun2.sh
+	sed -i "3 i TIMEZONESTRING='$TIMEZONESTRING'" archun2.sh
+	sed -i "4 i LOCALEGEN='$LOCALEGEN'" archun2.sh
+	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
+	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
 	clear
 	echo "You have selected the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
@@ -87,12 +103,14 @@ startAutomaticInstProcess() {
 	pacstrap /mnt base linux linux-firmware
 	# Generate Fstab
 	genfstab -U /mnt >> /mnt/etc/fstap
+	# Use part 2 in chroot
 	echo "Time to chroot"
+	arch-chroot /mnt /bin/bash -e -x /archun2.sh
 }
 
 
 mainMenu() {
-  echo "- - ArchUn: Part 1 - -"
+  echo "- - ArchUn - -"
   echo "ArchUn is an automatic ArchLinux install script."
   echo "You can either start the script with default settings, or use some custom values."
   echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
