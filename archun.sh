@@ -4,36 +4,50 @@
 ######################################
 #### User-defined variables START ####
 ######################################
+######################################
 
+# Time zone and locale
 TIMEZONESTRING="America/Toronto" # Time zone
 LOCALEGEN="en_CA.UTF-8 UTF-8" # Locale
 LOCALELANG="LANG=en_CA.UTF-8" # Locale
-THEHOSTNAME="arch" # Hostname
-DEFAULTDISK="/dev/sda" # Disk (find out with "fdisk -l")
 
-# Boot partition size. # Total size: 300MiB
-BOOTPARTSTART="16MiB" # Starts at position 16MiB
-BOOTPARTEND="316MiB" # Ends at position 316MiB
+# Hostname of the machine
+THEHOSTNAME="arch"
 
-# Swap partition size. # Total size: 4096MiB
-SWAPPARTSTART="317MiB" # Starts at position 317MiB
-SWAPPARTEND="4413MiB" # Ends at position 4413MiB
+# Disk (find out with "fdisk -l")
+DEFAULTDISK="/dev/sda"
 
-# Root partition size. # Total size: rest of disk
-ROOTPARTSTART="4414MiB" # Starts at position 4414MiB
-ROOTPARTEND="100%" # Ends at the end of the disk
+# Boot partition size in MiB. Number only.
+BOOTPART="300"
 
+# Swap partition size in MiB. Number only.
+SWAPPART="4096"
+
+# Root partition size in %. Include the %.
+# NOTICE: You can also use MiB for this one.
+# !!!HOWEVER!!!, it has to be formatted exactly like "1234MiB".
+ROOTPART="100%"
+
+######################################
 ######################################
 ####  User-defined variables END  ####
 ######################################
-
-# I'll calculate sizes automatically
-# once I'm done and everything works
 
 # Naming each variable for which is which to make it easier
 BOOTPARTNUM="1"
 SWAPPARTNUM="2"
 ROOTPARTNUM="3"
+PARTSIZETYPE="MiB"
+
+# Partition size calculation
+BOOTPARTSTART="$((16))"
+BOOTPARTEND="$(($BOOTPARTSTART+$BOOTPART))"
+
+SWAPPARTSTART="$(($BOOTPARTEND+1))"
+SWAPPARTEND="$(($SWAPPARTSTART+$SWAPPART))"
+
+ROOTPARTSTART="$(($SWAPPARTEND+1))"
+ROOTPARTEND="$ROOTPART"
 
 startAutomaticInstProcess() {
 	curl https://techkeep.net/archun/archun2.sh -o archun2.sh
@@ -52,9 +66,9 @@ startAutomaticInstProcess() {
 	timedatectl set-ntp true
 	# Creating the partitions with provided options
 	sudo parted $DEFAULTDISK --script mklabel gpt # GPT for UEFI
-	sudo parted $DEFAULTDISK --script mkpart primary fat32 $BOOTPARTSTART $BOOTPARTEND
-	sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
-	sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
+	sudo parted $DEFAULTDISK --script mkpart primary fat32 $BOOTPARTSTART$PARTSIZETYPE $BOOTPARTEND$PARTSIZETYPE
+	sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART$PARTSIZETYPE $SWAPPARTEND$PARTSIZETYPE
+	sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART$PARTSIZETYPE $ROOTPARTEND
 	mkfs.ext4 $DEFAULTDISK$ROOTPARTNUM
 	mkswap $DEFAULTDISK$SWAPPARTNUM
 	mkfs.fat -F 32 $DEFAULTDISK$BOOTPARTNUM
