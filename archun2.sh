@@ -4,11 +4,13 @@
 
 
 
+
 # Values that will be generated:
 #TIMEZONESTRING="America/Toronto"
 #LOCALEGEN="en_CA.UTF-8 UTF-8"
 #LOCALELANG="LANG=en_CA.UTF-8"
 #THEHOSTNAME="arch"
+#DEFAULTDISK="/dev/sda"
 
 # Set the time zone
 ln -sf /usr/share/zoneinfo/$TIMEZONESTRING /etc/localtime

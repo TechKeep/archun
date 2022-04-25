@@ -85,6 +85,7 @@ startAutomaticInstProcess() {
 	sed -i "4 i LOCALEGEN='$LOCALEGEN'" archun2.sh
 	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
 	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
+	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
 	clear
 	echo "You have selected the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
