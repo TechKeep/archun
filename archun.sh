@@ -14,9 +14,9 @@ USERBIOSTYPE="gpt" # Only GPT is supported right now
 DEFAULTDISK="/dev/sda"
 
 # Naming each variable for which is which to make it easier
-BOOTPARTDISK="{$DEFAULTDISK}1"
-SWAPPARTDISK="{$DEFAULTDISK}2"
-ROOTPARTDISK="{$DEFAULTDISK}3"
+BOOTPARTNUM="1"
+SWAPPARTNUM="2"
+ROOTPARTNUM="3"
 
 # I'll calculate sizes automatically
 # once I'm done and everything works
@@ -39,9 +39,9 @@ if [ "$USERBIOSTYPE" == "gpt" ]; then
 		sudo parted $DEFAULTDISK --script mkpart primary fat32 $BOOTPARTSTART $BOOTPARTEND
 		sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
 		sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
-		mkfs.ext4 $ROOTPARTDISK
-		mkswap $SWAPPARTDISK
-		mkfs.fat -F 32 $BOOTPARTDISK
+		mkfs.ext4 $DEFAULTDISK$ROOTPARTNUM
+		mkswap $DEFAULTDISK$SWAPPARTNUM
+		mkfs.fat -F 32 $DEFAULTDISK$BOOTPARTNUM
 	}
 else
 	createThePartitions() {
