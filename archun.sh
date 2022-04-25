@@ -8,29 +8,19 @@
 #### will be deleted.             ####
 ######################################
 
-USERBIOSTYPE="bios" # "bios" or "uefi"
+USERBIOSTYPE="gpt" # Only GPT is supported right now
 
 # The default disk (find out with "fdisk -l")
 DEFAULTDISK="/dev/sda"
 
+# Naming each variable for which is which to make it easier
+BOOTPARTDISK="{$DEFAULTDISK}1"
+SWAPPARTDISK="{$DEFAULTDISK}2"
+ROOTPARTDISK="{$DEFAULTDISK}3"
+
 # I'll calculate sizes automatically
 # once I'm done and everything works
-if [ "$USERBIOSTYPE" == "bios" ]; then
-	createThePartitions() {
-		# Swap partition size. # Total size: 4096MiB
-		SWAPPARTSTART="16MiB" # Starts at position 16MiB
-		SWAPPARTEND="4112MiB" # Ends at position 44112MiB
-
-		# Root partition size. # Total size: rest of disk
-		ROOTPARTSTART="4113MiB" # Starts at position 4113MiB
-		ROOTPARTEND="100%" # Ends at the end of the disk
-
-		# Create the partitions with provided options
-		sudo parted $DEFAULTDISK --script mklabel mbr # MBR for BIOS
-		sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
-		sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
-	}
-else
+if [ "$USERBIOSTYPE" == "gpt" ]; then
 	createThePartitions() {
 		# Boot partition size. # Total size: 300MiB
 		BOOTPARTSTART="16MiB" # Starts at position 16MiB
@@ -50,6 +40,27 @@ else
 		sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
 		sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
 	}
+else
+	createThePartitions() {
+		# MBR currently not supported
+		echo "MBR is currently not supported."
+		echo "Stopping."
+		read -p "Press ENTER to exit."
+		return
+
+		# Swap partition size. # Total size: 4096MiB
+		##SWAPPARTSTART="16MiB" # Starts at position 16MiB
+		##SWAPPARTEND="4112MiB" # Ends at position 4112MiB
+
+		# Root partition size. # Total size: rest of disk
+		##ROOTPARTSTART="4113MiB" # Starts at position 4113MiB
+		##ROOTPARTEND="100%" # Ends at the end of the disk
+
+		# Create the partitions with provided options
+		## #insert line to format to MBR# # MBR for BIOS
+		##sudo parted $DEFAULTDISK --script mkpart primary linux-swap $SWAPPARTSTART $SWAPPARTEND
+		##sudo parted $DEFAULTDISK --script mkpart primary ext4 $ROOTPARTSTART $ROOTPARTEND
+	}
 fi
 
 ######################################
@@ -62,10 +73,18 @@ startAutomaticInstProcess() {
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
 	# Setting date and time
 	timedatectl set-ntp true
-	timedatectl status # optional, output to verify it's set correctly
+	#timedatectl status # optional, output to verify it's set correctly
 	# Creating the partitions
 	createThePartitions
-
+	# Mounting all drives
+	mount $ROOTPARTDISK /mnt
+	mount --mkdir $BOOTPARTDISK /mnt/boot
+	swapon $SWAPPARTDISK
+	# Install base with pacstrap
+	pacstrap /mnt base linux linux-firmware
+	# Generate Fstab
+	genfstab -U /mnt >> /mnt/etc/fstap
+	echo "Time to chroot"
 }
 
 
@@ -75,7 +94,7 @@ mainMenu() {
   echo "You can either start the script with default settings, or use some custom values."
   echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
   PS3='Which process do you want? (ENTER to confirm): '
-  options=("Automatic" "Custom" "Continue to Part 2" "Quit")
+  options=("Automatic" "Custom" "Quit")
   select opt in "${options[@]}"
   do
       case $opt in
@@ -84,9 +103,6 @@ mainMenu() {
               ;;
           "Custom")
               startCustomInstProcess
-              ;;
-          "Continue to Part 2")
-              continueToPart2
               ;;
           "Quit")
               exit
