@@ -32,7 +32,10 @@ echo $THEHOSTNAME >> /etc/hostname
 mkinitcpio -P
 
 # Install GRUB
-yes | LC_ALL=en_CA.UTF-8 pacman -Syu grub efibootmgr
+yes | LC_ALL=en_CA.UTF-8 pacman -Syu grub efibootmgr dhcpcd
+systemctl start dhcpcd
+systemctl enable dhcpcd
+dhcpcd
 mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
