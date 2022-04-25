@@ -43,5 +43,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
 
 # Set a root password
-echo "\n\n\nSetting a password for root."
+echo " "
+echo " "
+echo " "
+echo "Setting a password for root."
 passwd

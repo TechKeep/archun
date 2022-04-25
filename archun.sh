@@ -63,8 +63,8 @@ startAutomaticInstProcess() {
 	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
 	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
 	clear
-	echo "\nYou have selected the AUTOMATIC process."
-	echo "!! WARNING !! - EVERYTHING will be ERASED from this device.\n"
+	echo "You have selected the AUTOMATIC process."
+	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
 	clear
@@ -95,14 +95,15 @@ startAutomaticInstProcess() {
 }
 
 mainMenu() {
-	echo "\n- - ArchUn - -"
+	echo " "
+	echo "- - ArchUn - -"
 	echo "ArchUn is an automatic ArchLinux install script."
 	echo "It is meant as a quick method of creating ArchLinux virtual machines."
 	echo "You can either start the script with default settings, or use some custom values."
 	# TODO: add a built-in way of editing the settings without having to edit the script.
 	echo "If you want to edit the default settings, check out the related post to see how."
 	echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
-	echo "\n"
+	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
 	options=("Proceed" "Quit")
 	select opt in "${options[@]}"
@@ -112,11 +113,14 @@ mainMenu() {
 	          startAutomaticInstProcess
 	          clear
 	          rm /mnt/archun2.sh
-	          echo "\n\nThe installation should now be complete. If something"
+	          echo " "
+	          echo "The installation should now be complete. If something"
 	          echo "didn't work properly, you can still do 'arch-chroot /mnt'"
 	          echo "right now to fix it manually."
 	          echo "If everything seemed fine, you can eject the"
-	          echo "installation media and reboot the machine.\n\n"
+	          echo "installation media and reboot the machine."
+	          echo " "
+	          echo " "
 	          exit
 	          ;;
 	      "Quit")
