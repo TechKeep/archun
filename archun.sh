@@ -118,15 +118,12 @@ mainMenu() {
   echo "You can either start the script with default settings, or use some custom values."
   echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
   PS3='Which process do you want? (ENTER to confirm): '
-  options=("Automatic" "Custom" "Quit")
+  options=("Automatic" "Quit")
   select opt in "${options[@]}"
   do
       case $opt in
           "Automatic")
               startAutomaticInstProcess
-              ;;
-          "Custom")
-              startCustomInstProcess
               ;;
           "Quit")
               exit
