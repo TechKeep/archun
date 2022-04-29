@@ -73,7 +73,6 @@ installDesktopEnvironment() {
 	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu sudo 
 	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu firefox 
 	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu neofetch
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu
 	 		  systemctl enable lxdm
 	 		  finishMenu
 	          exit
