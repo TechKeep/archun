@@ -34,7 +34,7 @@ echo $THEHOSTNAME >> /etc/hostname
 mkinitcpio -P
 
 # Install GRUB
-yes | LC_ALL=en_CA.UTF-8 pacman -Syu grub efibootmgr dhcpcd
+yes | LC_ALL=en_US.UTF-8 pacman -Syu grub efibootmgr dhcpcd
 systemctl start dhcpcd
 systemctl enable dhcpcd
 dhcpcd
@@ -48,3 +48,45 @@ echo " "
 echo " "
 echo "Setting a password for root."
 passwd
+
+installDesktopEnvironment() {
+	echo "Which preset do you want?"
+	echo " "
+	echo "XFCE (with LXDM) - Installs the following packages:"
+	echo "lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch"
+	echo " "
+	PS3="Choose an option's number and press ENTER to confirm: "
+	options=("XFCE" "Cancel")
+	select opt in "${options[@]}"
+	do
+	  case $opt in
+	      "XFCE")
+	 		  yes | LC_ALL=en_US.UTF-8 pacman -Syu lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch
+	 		  systemctl enable lxdm
+	          exit
+	          ;;
+	      "Cancel")
+	          exit
+	          ;;
+	      *) echo "Invalid option. $REPLY";;
+	  esac
+	done
+}
+
+# Install a Desktop Environment
+echo "Do you want to install a Desktop Environment with a preset?"
+PS3="Choose an option's number and press ENTER to confirm: "
+options=("Yes" "No")
+select opt in "${options[@]}"
+do
+  case $opt in
+      "Yes")
+ 		  installDesktopEnvironment
+          exit
+          ;;
+      "No")
+          exit
+          ;;
+      *) echo "Invalid option. $REPLY";;
+  esac
+done
