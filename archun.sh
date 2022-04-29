@@ -63,7 +63,7 @@ ROOTPARTSTART="$(($SWAPPARTEND+1))"
 ROOTPARTEND="$ROOTPART"
 
 startAutomaticInstProcess() {
-	curl https://raw.githubusercontent.com/TechKeep/archun/main/archun2.sh -o archun2.sh
+	curl https://raw.githubusercontent.com/TechKeep/archun/test/archun2.sh -o archun2.sh
 	sed -i "3 i TIMEZONESTRING='$TIMEZONESTRING'" archun2.sh
 	sed -i "4 i LOCALEGEN='$LOCALEGEN'" archun2.sh
 	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh

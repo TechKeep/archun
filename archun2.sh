@@ -42,7 +42,12 @@ mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
 
-read -p "holup"
+# Set a root password
+echo " "
+echo " "
+echo " "
+echo "Setting a password for root."
+passwd
 
 installDesktopEnvironment() {
 	echo "Which preset do you want?"
@@ -68,32 +73,20 @@ installDesktopEnvironment() {
 	done
 }
 
-finishedMenu() {
-	# Install a Desktop Environment
-	echo "Do you want to install a Desktop Environment with a preset?"
-	PS3="Choose an option's number and press ENTER to confirm: "
-	options=("Yes" "No")
-	select opt in "${options[@]}"
-	do
-	  case $opt in
-	      "Yes")
-	 		  installDesktopEnvironment
-	          exit
-	          ;;
-	      "No")
-	          exit
-	          ;;
-	      *) echo "Invalid option. $REPLY";;
-	  esac
-	done
-}
-
-finishedMenu
-read -p "holdup again"
-
-# Set a root password
-echo " "
-echo " "
-echo " "
-echo "Setting a password for root."
-passwd
+# Install a Desktop Environment
+echo "Do you want to install a Desktop Environment with a preset?"
+PS3="Choose an option's number and press ENTER to confirm: "
+options=("Yes" "No")
+select opt in "${options[@]}"
+do
+  case $opt in
+      "Yes")
+ 		  installDesktopEnvironment
+          exit
+          ;;
+      "No")
+          exit
+          ;;
+      *) echo "Invalid option. $REPLY";;
+  esac
+done
