@@ -34,7 +34,7 @@ echo $THEHOSTNAME >> /etc/hostname
 mkinitcpio -P
 
 # Install GRUB
-yes | LC_ALL=en_US.UTF-8 pacman -Syu grub efibootmgr dhcpcd
+yes | pacman -Syu grub efibootmgr dhcpcd
 systemctl start dhcpcd
 systemctl enable dhcpcd
 dhcpcd
@@ -43,65 +43,33 @@ grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
 
 # Set a root password
+clear
 echo " "
 echo " "
 echo " "
 echo "Setting a password for root."
 passwd
 
-installGPUDrivers() {
-	echo "..."
-}
-
-installDesktopEnvironment() {
-	echo "Which preset do you want?"
-	echo " "
-	echo "XFCE (with LXDM) - Installs the following packages:"
-	echo "lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch"
-	echo " "
-	PS3="Choose an option's number and press ENTER to confirm: "
-	options=("XFCE" "Cancel")
-	select opt in "${options[@]}"
-	do
-	  case $opt in
-	      "XFCE")
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu lxdm 
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu xfce4 
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu xfce4-goodies 
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu pulseaudio 
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu pavucontrol 
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu sudo 
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu firefox 
-	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu neofetch
-	 		  systemctl enable lxdm
-	 		  finishMenu
-	          exit
-	          ;;
-	      "Cancel")
-	          exit
-	          ;;
-	      *) echo "Invalid option. $REPLY";;
-	  esac
-	done
-}
-
 finishMenu() {
 	# Install a Desktop Environment
-	echo "Do you want to install a Desktop Environment with a preset?"
+	clear
+	echo " "
+	echo "Do you want to install anything (or anything else) extra?"
 	PS3="Choose an option's number and press ENTER to confirm: "
 	options=("Yes" "No")
 	select opt in "${options[@]}"
 	do
-	  case $opt in
-	      "Yes")
-	 		  installDesktopEnvironment
-	          exit
-	          ;;
-	      "No")
-	          exit
-	          ;;
-	      *) echo "Invalid option. $REPLY";;
-	  esac
+		case $opt in
+			"Yes")
+	 			curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
+	 			bash archunextras.sh
+	 			rm archunextras.sh && exit
+				;;
+			"No")
+				rm archun2.sh && exit
+				;;
+			*) echo "Invalid option. $REPLY";;
+		esac
 	done
 }
 
