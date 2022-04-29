@@ -50,11 +50,12 @@ echo " "
 echo "Setting a password for root."
 passwd
 
+# Menu that appears when it's done
 finishMenu() {
 	# Install a Desktop Environment
 	clear
 	echo " "
-	echo "Do you want to install anything (or anything else) extra?"
+	echo "Do you want to install anything extra?"
 	PS3="Choose an option's number and press ENTER to confirm: "
 	options=("Yes" "No")
 	select opt in "${options[@]}"

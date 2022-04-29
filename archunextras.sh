@@ -3,6 +3,7 @@
 
 installGPUDrivers() {
 	echo "..."
+	exit
 }
 
 installDesktopEnvironment() {
@@ -28,7 +29,7 @@ installDesktopEnvironment() {
 	 			yes "" | pacman -Syu firefox 
 	 			yes "" | pacman -Syu neofetch
 	 			systemctl enable lxdm
-	 			finishMenu
+	 			installExtras
 				;;
 			"Back")
 				installExtras
@@ -42,7 +43,7 @@ installDesktopEnvironment() {
 installExtras() {
 	clear
 	echo " "
-	echo "What do you want to install?"
+	echo "What (or what else) do you want to install?"
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
 	options=("Desktop Environment" "Cancel")
@@ -51,6 +52,7 @@ installExtras() {
 		case $opt in
 			"Desktop Environment")
 				installDesktopEnvironment
+				;;
 			"Cancel")
 				exit
 				;;
