@@ -42,13 +42,6 @@ mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
 
-# Set a root password
-echo " "
-echo " "
-echo " "
-echo "Setting a password for root."
-passwd
-
 read -p "holup"
 
 installDesktopEnvironment() {
@@ -96,3 +89,11 @@ finishedMenu() {
 }
 
 finishedMenu
+read -p "holdup again"
+
+# Set a root password
+echo " "
+echo " "
+echo " "
+echo "Setting a password for root."
+passwd
