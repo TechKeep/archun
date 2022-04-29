@@ -49,6 +49,10 @@ echo " "
 echo "Setting a password for root."
 passwd
 
+installGPUDrivers() {
+	echo "..."
+}
+
 installDesktopEnvironment() {
 	echo "Which preset do you want?"
 	echo " "
@@ -61,8 +65,9 @@ installDesktopEnvironment() {
 	do
 	  case $opt in
 	      "XFCE")
-	 		  yes | LC_ALL=en_US.UTF-8 pacman -Syu lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch
+	 		  yes "" | LC_ALL=en_US.UTF-8 pacman -Syu lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch
 	 		  systemctl enable lxdm
+	 		  finishMenu
 	          exit
 	          ;;
 	      "Cancel")
@@ -73,20 +78,24 @@ installDesktopEnvironment() {
 	done
 }
 
-# Install a Desktop Environment
-echo "Do you want to install a Desktop Environment with a preset?"
-PS3="Choose an option's number and press ENTER to confirm: "
-options=("Yes" "No")
-select opt in "${options[@]}"
-do
-  case $opt in
-      "Yes")
- 		  installDesktopEnvironment
-          exit
-          ;;
-      "No")
-          exit
-          ;;
-      *) echo "Invalid option. $REPLY";;
-  esac
-done
+finishMenu() {
+	# Install a Desktop Environment
+	echo "Do you want to install a Desktop Environment with a preset?"
+	PS3="Choose an option's number and press ENTER to confirm: "
+	options=("Yes" "No")
+	select opt in "${options[@]}"
+	do
+	  case $opt in
+	      "Yes")
+	 		  installDesktopEnvironment
+	          exit
+	          ;;
+	      "No")
+	          exit
+	          ;;
+	      *) echo "Invalid option. $REPLY";;
+	  esac
+	done
+}
+
+finishMenu
