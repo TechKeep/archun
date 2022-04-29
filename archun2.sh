@@ -64,10 +64,10 @@ finishMenu() {
 			"Yes")
 	 			curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
 	 			bash archunextras.sh
-	 			rm archunextras.sh && exit
+	 			exit
 				;;
 			"No")
-				rm archun2.sh && exit
+				exit
 				;;
 			*) echo "Invalid option. $REPLY";;
 		esac
