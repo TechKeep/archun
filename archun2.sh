@@ -65,7 +65,7 @@ installDesktopEnvironment() {
 	do
 	  case $opt in
 	      "XFCE")
-	 		  yes | echo | LC_ALL=en_US.UTF-8 pacman -Syu lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch
+	 		  yes | echo | echo | echo | echo | echo | echo | echo | echo | LC_ALL=en_US.UTF-8 pacman -Syu lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch
 	 		  systemctl enable lxdm
 	 		  finishMenu
 	          exit
