@@ -49,6 +49,8 @@ echo " "
 echo "Setting a password for root."
 passwd
 
+read -p "holup"
+
 installDesktopEnvironment() {
 	echo "Which preset do you want?"
 	echo " "
@@ -73,20 +75,24 @@ installDesktopEnvironment() {
 	done
 }
 
-# Install a Desktop Environment
-echo "Do you want to install a Desktop Environment with a preset?"
-PS3="Choose an option's number and press ENTER to confirm: "
-options=("Yes" "No")
-select opt in "${options[@]}"
-do
-  case $opt in
-      "Yes")
- 		  installDesktopEnvironment
-          exit
-          ;;
-      "No")
-          exit
-          ;;
-      *) echo "Invalid option. $REPLY";;
-  esac
-done
+finishedMenu() {
+	# Install a Desktop Environment
+	echo "Do you want to install a Desktop Environment with a preset?"
+	PS3="Choose an option's number and press ENTER to confirm: "
+	options=("Yes" "No")
+	select opt in "${options[@]}"
+	do
+	  case $opt in
+	      "Yes")
+	 		  installDesktopEnvironment
+	          exit
+	          ;;
+	      "No")
+	          exit
+	          ;;
+	      *) echo "Invalid option. $REPLY";;
+	  esac
+	done
+}
+
+finishedMenu
