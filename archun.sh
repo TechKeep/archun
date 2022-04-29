@@ -63,7 +63,10 @@ ROOTPARTSTART="$(($SWAPPARTEND+1))"
 ROOTPARTEND="$ROOTPART"
 
 startAutomaticInstProcess() {
+	# Part 2
 	curl https://raw.githubusercontent.com/TechKeep/archun/test/archun2.sh -o archun2.sh
+	# Extras
+	curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
 	sed -i "3 i TIMEZONESTRING='$TIMEZONESTRING'" archun2.sh
 	sed -i "4 i LOCALEGEN='$LOCALEGEN'" archun2.sh
 	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
@@ -100,7 +103,9 @@ startAutomaticInstProcess() {
 	#echo "Time to chroot"
 	#arch-chroot /mnt /bin/bash -e -x /archun2.sh
 	cp archun2.sh /mnt/archun2.sh
+	cp archunextras.sh /mnt/archunextras.sh
 	chmod +x /mnt/archun2.sh
+	chmod +x /mnt/archunextras.sh
 	arch-chroot /mnt ./archun2.sh
 }
 

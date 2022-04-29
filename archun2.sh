@@ -62,8 +62,7 @@ finishMenu() {
 	do
 		case $opt in
 			"Yes")
-	 			curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
-	 			bash archunextras.sh
+	 			./archunextras.sh
 	 			exit
 				;;
 			"No")

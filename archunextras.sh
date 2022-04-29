@@ -2,7 +2,7 @@
 # ArchUn (Extras) by github.com/TechKeep
 
 installGPUDrivers() {
-	echo "..."
+	read -p "GPU drivers installation not yet enabled, press ENTER to exit."
 	exit
 }
 
