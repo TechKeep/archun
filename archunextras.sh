@@ -1,8 +1,6 @@
 #!/bin/bash
 # ArchUn (Extras) by github.com/TechKeep
 
-clear
-
 installGPUDrivers() {
 	echo "..."
 	exit
@@ -31,11 +29,9 @@ installDesktopEnvironment() {
 	 			yes "" | pacman -Syu firefox 
 	 			yes "" | pacman -Syu neofetch
 	 			systemctl enable lxdm
-	 			clear
 	 			installExtras
 				;;
 			"Back")
-				clear
 				installExtras
 				;;
 			*) echo "Invalid option. $REPLY";;
