@@ -49,6 +49,7 @@ echo " "
 echo " "
 echo "Setting a password for root."
 passwd
+clear
 
 # Menu that appears when it's done
 finishMenu() {
