@@ -8,7 +8,6 @@ installGPUDrivers() {
 
 installDesktopEnvironment() {
 	clear
-	echo " "
 	echo "Which one do you want to install?"
 	echo " "
 	echo "XFCE (with LXDM) - Installs the following packages:"
@@ -42,7 +41,6 @@ installDesktopEnvironment() {
 
 installExtras() {
 	clear
-	echo " "
 	echo "What (or what else) do you want to install?"
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "

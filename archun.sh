@@ -73,10 +73,7 @@ startAutomaticInstProcess() {
 	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
 	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
 	clear
-	echo " "
-	echo " "
-	echo " "
-	echo "You have selected the AUTOMATIC process."
+	echo "You have started the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
@@ -110,9 +107,6 @@ startAutomaticInstProcess() {
 }
 
 mainMenu() {
-	echo " "
-	echo " "
-	echo " "
 	echo "- - ArchUn - -"
 	echo "ArchUn is an automatic ArchLinux install script."
 	echo "It is meant as a quick method of creating ArchLinux virtual machines."

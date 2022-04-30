@@ -44,9 +44,6 @@ grub-install --force $DEFAULTDISK
 
 # Set a root password
 clear
-echo " "
-echo " "
-echo " "
 echo "Setting a password for root."
 passwd
 
