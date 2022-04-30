@@ -107,9 +107,9 @@ continueTheInstall() {
 
 startAutomaticInstProcess() {
 	# Part 2
-	curl https://raw.githubusercontent.com/TechKeep/archun/test/archun2.sh -o archun2.sh
+	curl https://raw.githubusercontent.com/TechKeep/archun/main/archun2.sh -o archun2.sh
 	# Extras
-	curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
+	curl https://raw.githubusercontent.com/TechKeep/archun/main/archunextras.sh -o archunextras.sh
 	clear
 	echo "In which mode do you want to run the script?"
 	echo " "
