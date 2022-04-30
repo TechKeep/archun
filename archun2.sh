@@ -41,14 +41,18 @@ mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
 
-# Set a root password
-clear
-echo "Setting a password for root."
-if [ $AUTOMATICROOTACCOUNT = "yes" ]; then
-	echo $ROOTACCOUNTPASSWORD | passwd --stdin root
-else
-	passwd
-fi
+setRootPassword() {
+	# Set a root password
+	clear
+	echo "Setting a password for root."
+	if [ $AUTOMATICROOTACCOUNT == "yes" ]; then
+		echo $ROOTACCOUNTPASSWORD | passwd --stdin root
+		return
+	else
+		passwd
+		return
+	fi
+}
 
 # Menu that appears when it's done
 finishMenu() {
@@ -63,10 +67,11 @@ finishMenu() {
 		case $opt in
 			"Yes")
 	 			bash archunextras.sh
-	 			read -p "wait before exiting, debug"
+	 			read -p "wait before exiting, debug, chose yes"
 	 			exit
 				;;
 			"No")
+				read -p "wait before exiting, debug, chose no"
 				exit
 				;;
 			*) echo "Invalid option. $REPLY";;
@@ -75,8 +80,12 @@ finishMenu() {
 }
 
 # Checking if we install extras
-if [ $SKIPEXTRAS = "no" ]; then
+if [ $SKIPEXTRAS == "no" ]; then
+	setRootPassword
 	finishMenu
 else
-	exit
+	setRootPassword
+	return
 fi
+
+exit # Go back to part 1

@@ -43,24 +43,27 @@ SWAPPART="4000"
 ROOTPART="100" # WARNING, READ ABOVE
 ROOTPARTSIZETYPE="%" # WARNING, READ ABOVE
 
-# Root password
-# If AUTOMATICROOTACCOUNT is set to "yes", it will use
-# the value inside ROOTACCOUNTPASSWORD. If it's set to
-# "no", it will ignore it and ask you at the end.
-AUTOMATICROOTACCOUNT="no"
-ROOTACCOUNTPASSWORD="password"
-
 # Skip asking for extras?
 # If this is set to "yes", ArchLinux will only install
 # in commandline mode. Keep it set to "no" if you want
 # to be asked to install a Desktop Environment.
-SKIPEXTRAS="no"
+SKIPEXTRAS="no" # Default is "no"
 
 ######################################
 ####  User-defined variables END  ####
 ######################################
 ######################################
 ######################################
+
+# Root password
+# If AUTOMATICROOTACCOUNT is set to "yes", it will use
+# the value inside ROOTACCOUNTPASSWORD. If it's set to
+# "no", it will ignore it and ask you at the end.
+# NOTE: PLEASE DO NOT USE THIS OPTION UNLESS YOU MUST.
+# THIS IS MEANT FOR TESTING PURPOSES.
+# In doubt, don't touch this.
+AUTOMATICROOTACCOUNT="yes" # Default is "no"
+ROOTACCOUNTPASSWORD="password"
 
 # Do not edit this unless you really know what you're doing.
 # If you don't do EVERYTHING necessary, a lot of storage space
