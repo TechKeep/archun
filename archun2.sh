@@ -1,10 +1,6 @@
 #!/bin/bash
 # ArchUn (Part 2) by github.com/TechKeep
 
-
-
-
-
 # Variables that will be received (with different
 # contents; the following values are the defaults
 # and are only there for reference to make it easier).
@@ -13,6 +9,9 @@
 #LOCALELANG="LANG=en_CA.UTF-8"
 #THEHOSTNAME="arch"
 #DEFAULTDISK="/dev/sda"
+#AUTOMATICROOTACCOUNT="no"
+#ROOTACCOUNTPASSWORD="password"
+#SKIPEXTRAS="no"
 
 # Set the time zone
 ln -sf /usr/share/zoneinfo/$TIMEZONESTRING /etc/localtime
@@ -45,7 +44,11 @@ grub-install --force $DEFAULTDISK
 # Set a root password
 clear
 echo "Setting a password for root."
-passwd
+if [ $AUTOMATICROOTACCOUNT == "yes" ]; then
+	echo $ROOTACCOUNTPASSWORD | passwd --stdin root
+else
+	passwd
+fi
 
 # Menu that appears when it's done
 finishMenu() {
@@ -70,4 +73,9 @@ finishMenu() {
 	done
 }
 
-finishMenu
+# Checking if we install extras
+if [ $SKIPEXTRAS == "no" ]; then
+	finishMenu
+else
+	exit
+fi

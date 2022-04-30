@@ -43,6 +43,19 @@ SWAPPART="4000"
 ROOTPART="100" # WARNING, READ ABOVE
 ROOTPARTSIZETYPE="%" # WARNING, READ ABOVE
 
+# Root password
+# If AUTOMATICROOTACCOUNT is set to "yes", it will use
+# the value inside ROOTACCOUNTPASSWORD. If it's set to
+# "no", it will ignore it and ask you at the end.
+AUTOMATICROOTACCOUNT="no"
+ROOTACCOUNTPASSWORD="password"
+
+# Skip asking for extras?
+# If this is set to "yes", ArchLinux will only install
+# in commandline mode. Keep it set to "no" if you want
+# to be asked to install a Desktop Environment.
+SKIPEXTRAS="no"
+
 ######################################
 ####  User-defined variables END  ####
 ######################################
@@ -72,6 +85,9 @@ startAutomaticInstProcess() {
 	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
 	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
 	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
+	sed -i "8 i DEFAULTDISK='$AUTOMATICROOTACCOUNT'" archun2.sh
+	sed -i "9 i DEFAULTDISK='$ROOTACCOUNTPASSWORD'" archun2.sh
+	sed -i "10 i DEFAULTDISK='$SKIPEXTRAS'" archun2.sh
 	clear
 	echo "You have started the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
