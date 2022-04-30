@@ -85,9 +85,9 @@ startAutomaticInstProcess() {
 	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
 	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
 	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
-	sed -i "8 i DEFAULTDISK='$AUTOMATICROOTACCOUNT'" archun2.sh
-	sed -i "9 i DEFAULTDISK='$ROOTACCOUNTPASSWORD'" archun2.sh
-	sed -i "10 i DEFAULTDISK='$SKIPEXTRAS'" archun2.sh
+	sed -i "8 i AUTOMATICROOTACCOUNT='$AUTOMATICROOTACCOUNT'" archun2.sh
+	sed -i "9 i ROOTACCOUNTPASSWORD='$ROOTACCOUNTPASSWORD'" archun2.sh
+	sed -i "10 i SKIPEXTRAS='$SKIPEXTRAS'" archun2.sh
 	clear
 	echo "You have started the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
