@@ -44,7 +44,7 @@ grub-install --force $DEFAULTDISK
 # Set a root password
 clear
 echo "Setting a password for root."
-if [ $AUTOMATICROOTACCOUNT == "yes" ]; then
+if [ $AUTOMATICROOTACCOUNT = "yes" ]; then
 	echo $ROOTACCOUNTPASSWORD | passwd --stdin root
 else
 	passwd
@@ -75,7 +75,7 @@ finishMenu() {
 }
 
 # Checking if we install extras
-if [ $SKIPEXTRAS == "no" ]; then
+if [ $SKIPEXTRAS = "no" ]; then
 	finishMenu
 else
 	exit
