@@ -62,7 +62,8 @@ finishMenu() {
 	do
 		case $opt in
 			"Yes")
-	 			./archunextras.sh
+	 			bash archunextras.sh
+	 			read -p "wait before exiting, debug"
 	 			exit
 				;;
 			"No")
