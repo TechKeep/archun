@@ -36,7 +36,6 @@ installDesktopEnvironment() {
 			*) echo "Invalid option. $REPLY";;
 		esac
 	done
-	;;
 }
 
 installExtras() {
