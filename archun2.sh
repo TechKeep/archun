@@ -1,6 +1,13 @@
 #!/bin/bash
 # ArchUn (Part 2) by github.com/TechKeep
 
+
+
+
+
+
+
+
 # Variables that will be received (with different
 # contents; the following values are the defaults
 # and are only there for reference to make it easier).
@@ -91,20 +98,22 @@ finishMenu() {
 	done
 }
 
-# Checking if we install extras
-if [ $SKIPEXTRAS == "no" ]; then
-	passwd
-	finishMenu
-else
-	if [ $INSTALLDEFAULTDE == "yes" ]; then
-		installDefaultDE
+doWeInstallExtras() {
+	if [ $SKIPEXTRAS == "no" ]; then
 		passwd
-		return
+		finishMenu
 	else
-		passwd
-		return
+		if [ $INSTALLDEFAULTDE == "yes" ]; then
+			installDefaultDE
+			passwd
+			exit
+		else
+			passwd
+			exit
+		fi
 	fi
-	return
-fi
+}
+
+doWeInstallExtras
 
 exit # Go back to part 1
