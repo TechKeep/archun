@@ -12,7 +12,7 @@
 ##AUTOMATICROOTACCOUNT="no"
 ##ROOTACCOUNTPASSWORD="password"
 #SKIPEXTRAS="no"
-#INSTALLDEFAULTDE="yes"
+#INSTALLDEFAULTDE="no"
 
 # Set the time zone
 ln -sf /usr/share/zoneinfo/$TIMEZONESTRING /etc/localtime

@@ -43,18 +43,6 @@ SWAPPART="4000"
 ROOTPART="100" # WARNING, READ ABOVE
 ROOTPARTSIZETYPE="%" # WARNING, READ ABOVE
 
-# Skip asking for extras?
-# If this is set to "yes", ArchLinux will only install
-# in commandline mode. Keep it set to "no" if you want
-# to be asked to install a Desktop Environment.
-SKIPEXTRAS="yes" # Default is "no"
-
-# Installs default packages (LXDM, XFCE, ...) to
-# get a Desktop Environment automatically.
-# This option will only work if SKIPEXTRAS is
-# set to "yes" above.
-INSTALLDEFAULTDE="yes"
-
 ######################################
 ####  User-defined variables END  ####
 ######################################
@@ -89,17 +77,64 @@ startAutomaticInstProcess() {
 	curl https://raw.githubusercontent.com/TechKeep/archun/test/archun2.sh -o archun2.sh
 	# Extras
 	curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
-	sed -i "3 i TIMEZONESTRING='$TIMEZONESTRING'" archun2.sh
-	sed -i "4 i LOCALEGEN='$LOCALEGEN'" archun2.sh
-	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
-	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
-	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
-	#sed -i "10 i AUTOMATICROOTACCOUNT='$AUTOMATICROOTACCOUNT'" archun2.sh
-	#sed -i "11 i ROOTACCOUNTPASSWORD='$ROOTACCOUNTPASSWORD'" archun2.sh
-	sed -i "8 i SKIPEXTRAS='$SKIPEXTRAS'" archun2.sh
-	sed -i "9 i INSTALLDEFAULTDE='$INSTALLDEFAULTDE'" archun2.sh
 	clear
-	echo "You have started the AUTOMATIC process."
+	echo "In which mode do you want to run the script?"
+	echo " "
+	echo "BASE UNATTENDED:"
+	echo "This will install ArchLinux's base and nothing else."
+	echo " "
+	echo "ASK FOR EXTRAS:"
+	echo "This will install ArchLinux's base, then, at the end, you will be presented with a menu with which you can install extra package presets."
+	echo " "
+	echo "FULL UNATTENDED:"
+	echo "This will install ArchLinux's base as well as a Desktop Environment and a Session Manager using a set preset."
+	echo "Packages: (lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch)"
+	echo " "
+	PS3="Choose an option's number and press ENTER to confirm: "
+	echo " "
+	options=("BASE UNATTENDED" "ASK FOR EXTRAS" "FULL UNATTENDED" "Cancel")
+	select opt in "${options[@]}"
+	do
+		case $opt in
+			"BASE UNATTENDED")
+				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
+				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
+				clear
+				echo "You have started the BASE UNATTENDED process."
+	 			return
+				;;
+			"ASK FOR EXTRAS")
+				sed -i "3 i SKIPEXTRAS='no'" archun2.sh
+				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
+				clear
+				echo "You have started the ASK FOR EXTRAS process."
+	 			return
+				;;
+			"FULL UNATTENDED")
+				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
+				sed -i "4 i INSTALLDEFAULTDE='yes'" archun2.sh
+				clear
+				echo "You have started the FULL UNATTENDED process."
+	 			return
+				;;
+			"Cancel")
+				echo "Aborting..."
+				exit
+				;;
+			*) echo "Invalid option. $REPLY";;
+		esac
+	done
+
+	sed -i "5 i TIMEZONESTRING='$TIMEZONESTRING'" archun2.sh
+	sed -i "6 i LOCALEGEN='$LOCALEGEN'" archun2.sh
+	sed -i "7 i LOCALELANG='$LOCALELANG'" archun2.sh
+	sed -i "8 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
+	sed -i "9 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
+	#sed -i "X i SKIPEXTRAS='$SKIPEXTRAS'" archun2.sh
+	#sed -i "X i INSTALLDEFAULTDE='$INSTALLDEFAULTDE'" archun2.sh
+	#sed -i "X i AUTOMATICROOTACCOUNT='$AUTOMATICROOTACCOUNT'" archun2.sh
+	#sed -i "X i ROOTACCOUNTPASSWORD='$ROOTACCOUNTPASSWORD'" archun2.sh
+	
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
@@ -138,15 +173,16 @@ mainMenu() {
 	echo "It is meant as a quick method of creating ArchLinux virtual machines."
 	echo "You can either start the script with default settings, or use some custom values."
 	# TODO: add a built-in way of editing the settings without having to edit the script.
-	echo "If you want to edit the default settings, check out the related post to see how."
+	#echo "If you want to edit the default settings, check out the related post to see how."
+	echo "NOTE: If you want to edit the default settings, check out the related post to see how."
 	echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
-	options=("Proceed" "Quit")
+	options=("I understand" "Quit")
 	select opt in "${options[@]}"
 	do
 		case $opt in
-			"Proceed")
+			"I understand")
 				startAutomaticInstProcess
 				clear
 				rm /mnt/archun2.sh
