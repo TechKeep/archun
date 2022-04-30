@@ -9,8 +9,8 @@
 #LOCALELANG="LANG=en_CA.UTF-8"
 #THEHOSTNAME="arch"
 #DEFAULTDISK="/dev/sda"
-#AUTOMATICROOTACCOUNT="no"
-#ROOTACCOUNTPASSWORD="password"
+##AUTOMATICROOTACCOUNT="no"
+##ROOTACCOUNTPASSWORD="password"
 #SKIPEXTRAS="no"
 #INSTALLDEFAULTDE="yes"
 
@@ -54,18 +54,18 @@ installDefaultDE() {
 	systemctl enable lxdm
 }
 
-setRootPassword() {
-	# Set a root password
-	clear
-	echo "Setting a password for root."
-	if [ $AUTOMATICROOTACCOUNT == "yes" ]; then
-		echo $ROOTACCOUNTPASSWORD | passwd --stdin root
-		return
-	else
-		passwd
-		return
-	fi
-}
+#setRootPassword() {
+#	# Set a root password
+#	clear
+#	echo "Setting a password for root."
+#	if [ $AUTOMATICROOTACCOUNT == "yes" ]; then
+#		echo $ROOTACCOUNTPASSWORD | passwd --stdin root
+#		return
+#	else
+#		passwd
+#		return
+#	fi
+#}
 
 # Menu that appears when it's done
 finishMenu() {
@@ -81,10 +81,10 @@ finishMenu() {
 		case $opt in
 			"Yes")
 	 			bash archunextras.sh
-	 			exit
+	 			return
 				;;
 			"No")
-				exit
+				return
 				;;
 			*) echo "Invalid option. $REPLY";;
 		esac
@@ -93,15 +93,15 @@ finishMenu() {
 
 # Checking if we install extras
 if [ $SKIPEXTRAS == "no" ]; then
-	setRootPassword
+	passwd
 	finishMenu
 else
 	if [ $INSTALLDEFAULTDE == "yes" ]; then
-		setRootPassword
+		passwd
 		installDefaultDE
 		return
 	else
-		setRootPassword
+		passwd
 		return
 	fi
 	return

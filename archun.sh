@@ -68,8 +68,8 @@ INSTALLDEFAULTDE="yes"
 # NOTE: PLEASE DO NOT USE THIS OPTION UNLESS YOU MUST.
 # THIS IS MEANT FOR TESTING PURPOSES.
 # In doubt, don't touch this.
-AUTOMATICROOTACCOUNT="yes" # Default is "no"
-ROOTACCOUNTPASSWORD="password"
+#AUTOMATICROOTACCOUNT="yes" # Default is "no"
+#ROOTACCOUNTPASSWORD="password"
 
 # Do not edit this unless you really know what you're doing.
 # If you don't do EVERYTHING necessary, a lot of storage space
@@ -94,10 +94,10 @@ startAutomaticInstProcess() {
 	sed -i "5 i LOCALELANG='$LOCALELANG'" archun2.sh
 	sed -i "6 i THEHOSTNAME='$THEHOSTNAME'" archun2.sh
 	sed -i "7 i DEFAULTDISK='$DEFAULTDISK'" archun2.sh
-	sed -i "8 i AUTOMATICROOTACCOUNT='$AUTOMATICROOTACCOUNT'" archun2.sh
-	sed -i "9 i ROOTACCOUNTPASSWORD='$ROOTACCOUNTPASSWORD'" archun2.sh
-	sed -i "10 i SKIPEXTRAS='$SKIPEXTRAS'" archun2.sh
-	sed -i "11 i INSTALLDEFAULTDE='$INSTALLDEFAULTDE'" archun2.sh
+	#sed -i "8 i AUTOMATICROOTACCOUNT='$AUTOMATICROOTACCOUNT'" archun2.sh
+	#sed -i "9 i ROOTACCOUNTPASSWORD='$ROOTACCOUNTPASSWORD'" archun2.sh
+	sed -i "8 i SKIPEXTRAS='$SKIPEXTRAS'" archun2.sh
+	sed -i "9 i INSTALLDEFAULTDE='$INSTALLDEFAULTDE'" archun2.sh
 	clear
 	echo "You have started the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
