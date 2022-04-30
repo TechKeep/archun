@@ -72,56 +72,7 @@ SWAPPARTEND="$(($SWAPPARTSTART+$SWAPPART))"
 ROOTPARTSTART="$(($SWAPPARTEND+1))"
 ROOTPARTEND="$ROOTPART"
 
-startAutomaticInstProcess() {
-	# Part 2
-	curl https://raw.githubusercontent.com/TechKeep/archun/test/archun2.sh -o archun2.sh
-	# Extras
-	curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
-	clear
-	echo "In which mode do you want to run the script?"
-	echo " "
-	echo "BASE UNATTENDED:"
-	echo "This will install ArchLinux's base and nothing else."
-	echo " "
-	echo "ASK FOR EXTRAS:"
-	echo "This will install ArchLinux's base, then, at the end, you will be presented with a menu with which you can install extra package presets."
-	echo " "
-	echo "FULL UNATTENDED:"
-	echo "This will install ArchLinux's base as well as a Desktop Environment and a Session Manager using a set preset."
-	echo "Packages: (lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch)"
-	echo " "
-	PS3="Choose an option's number and press ENTER to confirm: "
-	echo " "
-	options=("BASE UNATTENDED" "ASK FOR EXTRAS" "FULL UNATTENDED" "Cancel")
-	select opt in "${options[@]}"
-	do
-		case $opt in
-			"BASE UNATTENDED")
-				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
-				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
-				clear
-				echo "You have started the BASE UNATTENDED process."
-				;;
-			"ASK FOR EXTRAS")
-				sed -i "3 i SKIPEXTRAS='no'" archun2.sh
-				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
-				clear
-				echo "You have started the ASK FOR EXTRAS process."
-				;;
-			"FULL UNATTENDED")
-				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
-				sed -i "4 i INSTALLDEFAULTDE='yes'" archun2.sh
-				clear
-				echo "You have started the FULL UNATTENDED process."
-				;;
-			"Cancel")
-				echo "Aborting..."
-				exit
-				;;
-			*) echo "Invalid option. $REPLY";;
-		esac
-	done
-
+continueTheInstall() {
 	sed -i "5 i TIMEZONESTRING='$TIMEZONESTRING'" archun2.sh
 	sed -i "6 i LOCALEGEN='$LOCALEGEN'" archun2.sh
 	sed -i "7 i LOCALELANG='$LOCALELANG'" archun2.sh
@@ -161,6 +112,60 @@ startAutomaticInstProcess() {
 	chmod +x /mnt/archun2.sh
 	chmod +x /mnt/archunextras.sh
 	arch-chroot /mnt ./archun2.sh
+}
+
+startAutomaticInstProcess() {
+	# Part 2
+	curl https://raw.githubusercontent.com/TechKeep/archun/test/archun2.sh -o archun2.sh
+	# Extras
+	curl https://raw.githubusercontent.com/TechKeep/archun/test/archunextras.sh -o archunextras.sh
+	clear
+	echo "In which mode do you want to run the script?"
+	echo " "
+	echo "BASE UNATTENDED:"
+	echo "This will install ArchLinux's base and nothing else."
+	echo " "
+	echo "ASK FOR EXTRAS:"
+	echo "This will install ArchLinux's base, then, at the end, you will be presented with a menu with which you can install extra package presets."
+	echo " "
+	echo "FULL UNATTENDED:"
+	echo "This will install ArchLinux's base as well as a Desktop Environment and a Session Manager using a set preset."
+	echo "Packages: (lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch)"
+	echo " "
+	PS3="Choose an option's number and press ENTER to confirm: "
+	echo " "
+	options=("BASE UNATTENDED" "ASK FOR EXTRAS" "FULL UNATTENDED" "Cancel")
+	select opt in "${options[@]}"
+	do
+		case $opt in
+			"BASE UNATTENDED")
+				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
+				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
+				clear
+				echo "You have started the BASE UNATTENDED process."
+				continueTheInstall
+				;;
+			"ASK FOR EXTRAS")
+				sed -i "3 i SKIPEXTRAS='no'" archun2.sh
+				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
+				clear
+				echo "You have started the ASK FOR EXTRAS process."
+				continueTheInstall
+				;;
+			"FULL UNATTENDED")
+				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
+				sed -i "4 i INSTALLDEFAULTDE='yes'" archun2.sh
+				clear
+				echo "You have started the FULL UNATTENDED process."
+				continueTheInstall
+				;;
+			"Cancel")
+				echo "Aborting..."
+				exit
+				;;
+			*) echo "Invalid option. $REPLY";;
+		esac
+	done
 }
 
 mainMenu() {
