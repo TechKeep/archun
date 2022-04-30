@@ -97,8 +97,8 @@ if [ $SKIPEXTRAS == "no" ]; then
 	finishMenu
 else
 	if [ $INSTALLDEFAULTDE == "yes" ]; then
-		passwd
 		installDefaultDE
+		passwd
 		return
 	else
 		passwd
