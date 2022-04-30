@@ -88,10 +88,10 @@ finishMenu() {
 		case $opt in
 			"Yes")
 	 			bash archunextras.sh
-	 			return
+	 			exit
 				;;
 			"No")
-				return
+				exit
 				;;
 			*) echo "Invalid option. $REPLY";;
 		esac

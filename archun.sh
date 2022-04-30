@@ -143,6 +143,7 @@ startAutomaticInstProcess() {
 				clear
 				echo "You have started the BASE UNATTENDED process."
 				continueTheInstall
+				return
 				;;
 			"ASK FOR EXTRAS")
 				sed -i "3 i SKIPEXTRAS='no'" archun2.sh
@@ -150,6 +151,7 @@ startAutomaticInstProcess() {
 				clear
 				echo "You have started the ASK FOR EXTRAS process."
 				continueTheInstall
+				return
 				;;
 			"FULL UNATTENDED")
 				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
@@ -157,6 +159,7 @@ startAutomaticInstProcess() {
 				clear
 				echo "You have started the FULL UNATTENDED process."
 				continueTheInstall
+				return
 				;;
 			"Cancel")
 				echo "Aborting..."
