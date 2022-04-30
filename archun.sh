@@ -101,21 +101,18 @@ startAutomaticInstProcess() {
 				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
 				clear
 				echo "You have started the BASE UNATTENDED process."
-	 			return
 				;;
 			"ASK FOR EXTRAS")
 				sed -i "3 i SKIPEXTRAS='no'" archun2.sh
 				sed -i "4 i INSTALLDEFAULTDE='no'" archun2.sh
 				clear
 				echo "You have started the ASK FOR EXTRAS process."
-	 			return
 				;;
 			"FULL UNATTENDED")
 				sed -i "3 i SKIPEXTRAS='yes'" archun2.sh
 				sed -i "4 i INSTALLDEFAULTDE='yes'" archun2.sh
 				clear
 				echo "You have started the FULL UNATTENDED process."
-	 			return
 				;;
 			"Cancel")
 				echo "Aborting..."
