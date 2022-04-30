@@ -7,14 +7,6 @@
 #### User-defined variables START ####
 ######################################
 
-# Time zone and locale
-TIMEZONESTRING="America/Toronto" # Time zone
-LOCALEGEN="en_CA.UTF-8 UTF-8" # Locale
-LOCALELANG="LANG=en_CA.UTF-8" # Locale
-
-# Hostname of the machine
-THEHOSTNAME="arch"
-
 # Disk (find out with "fdisk -l")
 # MAKE SURE TO ALSO PAY ATTENTION TO THE VALUES BELOW.
 # PLEASE MAKE SURE YOU UNDERSTAND.
@@ -30,6 +22,14 @@ DEFAULTDISK="/dev/sda"
 BOOTPARTNUM="1"
 SWAPPARTNUM="2"
 ROOTPARTNUM="3"
+
+# Time zone and locale
+TIMEZONESTRING="America/Toronto" # Time zone
+LOCALEGEN="en_CA.UTF-8 UTF-8" # Locale
+LOCALELANG="LANG=en_CA.UTF-8" # Locale
+
+# Hostname of the machine
+THEHOSTNAME="arch"
 
 # Boot partition size in MiB. Number only.
 BOOTPART="300"
