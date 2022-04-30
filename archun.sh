@@ -133,7 +133,6 @@ startAutomaticInstProcess() {
 	echo "Packages: (lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch)"
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
-	echo " "
 	options=("BASE UNATTENDED" "ASK FOR EXTRAS" "FULL UNATTENDED" "Cancel")
 	select opt in "${options[@]}"
 	do
@@ -179,7 +178,6 @@ mainMenu() {
 	echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
-	echo " "
 	options=("I understand" "Quit")
 	select opt in "${options[@]}"
 	do
