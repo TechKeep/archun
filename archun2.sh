@@ -1,13 +1,6 @@
 #!/bin/bash
 # ArchUn (Part 2) by github.com/TechKeep
 
-
-
-
-
-
-
-
 # Variables that will be received (with different
 # contents; the following values are the defaults
 # and are only there for reference to make it easier).
@@ -16,8 +9,6 @@
 #LOCALELANG="LANG=en_CA.UTF-8"
 #THEHOSTNAME="arch"
 #DEFAULTDISK="/dev/sda"
-##AUTOMATICROOTACCOUNT="no"
-##ROOTACCOUNTPASSWORD="password"
 #SKIPEXTRAS="no"
 #INSTALLDEFAULTDE="no"
 

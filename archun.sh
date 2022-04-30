@@ -26,6 +26,7 @@ DEFAULTDISK="/dev/sda"
 # will need to use "p1", "p2" and "p3" as partition numbers.
 # If your drive is still named similarly to "/dev/sda", then
 # you will need to use "1", "2" and "3" as partition numbers.
+# KEEP THE SAME NUMBER ORDER.
 BOOTPARTNUM="1"
 SWAPPARTNUM="2"
 ROOTPARTNUM="3"
@@ -37,7 +38,7 @@ BOOTPART="300"
 SWAPPART="4000"
 
 # Root partition size in %. Percentage.
-# NOTICE: You can also use MiB for this one.
+# NOTICE: You can also use MiB for this one,
 # !!!HOWEVER!!!, you must specify the symbol manually ("%" or "MiB")
 # in the separate variable named "ROOTPARTENDUNIT" below.
 ROOTPART="100" # WARNING, READ ABOVE
@@ -48,16 +49,6 @@ ROOTPARTSIZETYPE="%" # WARNING, READ ABOVE
 ######################################
 ######################################
 ######################################
-
-# Root password
-# If AUTOMATICROOTACCOUNT is set to "yes", it will use
-# the value inside ROOTACCOUNTPASSWORD. If it's set to
-# "no", it will ignore it and ask you at the end.
-# NOTE: PLEASE DO NOT USE THIS OPTION UNLESS YOU MUST.
-# THIS IS MEANT FOR TESTING PURPOSES.
-# In doubt, don't touch this.
-#AUTOMATICROOTACCOUNT="yes" # Default is "no"
-#ROOTACCOUNTPASSWORD="password"
 
 # Do not edit this unless you really know what you're doing.
 # If you don't do EVERYTHING necessary, a lot of storage space
