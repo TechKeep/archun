@@ -14,6 +14,7 @@ installDesktopEnvironment() {
 	echo "lxdm xfce4 xfce4-goodies pulseaudio pavucontrol sudo firefox neofetch"
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
+	echo " "
 	options=("XFCE" "Back")
 	select opt in "${options[@]}"
 	do
@@ -43,6 +44,7 @@ installExtras() {
 	echo "What (or what else) do you want to install?"
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
+	echo " "
 	options=("Desktop Environment" "Cancel")
 	select opt in "${options[@]}"
 	do

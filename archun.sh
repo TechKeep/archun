@@ -47,7 +47,13 @@ ROOTPARTSIZETYPE="%" # WARNING, READ ABOVE
 # If this is set to "yes", ArchLinux will only install
 # in commandline mode. Keep it set to "no" if you want
 # to be asked to install a Desktop Environment.
-SKIPEXTRAS="no" # Default is "no"
+SKIPEXTRAS="yes" # Default is "no"
+
+# Installs default packages (LXDM, XFCE, ...) to
+# get a Desktop Environment automatically.
+# This option will only work if SKIPEXTRAS is
+# set to "yes" above.
+INSTALLDEFAULTDE="yes"
 
 ######################################
 ####  User-defined variables END  ####
@@ -91,6 +97,7 @@ startAutomaticInstProcess() {
 	sed -i "8 i AUTOMATICROOTACCOUNT='$AUTOMATICROOTACCOUNT'" archun2.sh
 	sed -i "9 i ROOTACCOUNTPASSWORD='$ROOTACCOUNTPASSWORD'" archun2.sh
 	sed -i "10 i SKIPEXTRAS='$SKIPEXTRAS'" archun2.sh
+	sed -i "11 i INSTALLDEFAULTDE='$INSTALLDEFAULTDE'" archun2.sh
 	clear
 	echo "You have started the AUTOMATIC process."
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."

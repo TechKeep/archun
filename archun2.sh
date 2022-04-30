@@ -12,6 +12,7 @@
 #AUTOMATICROOTACCOUNT="no"
 #ROOTACCOUNTPASSWORD="password"
 #SKIPEXTRAS="no"
+#INSTALLDEFAULTDE="yes"
 
 # Set the time zone
 ln -sf /usr/share/zoneinfo/$TIMEZONESTRING /etc/localtime
@@ -41,6 +42,18 @@ mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --force $DEFAULTDISK
 
+installDefaultDE() {
+	yes "" | pacman -Syu lxdm 
+	yes "" | pacman -Syu xfce4 
+	yes "" | pacman -Syu xfce4-goodies 
+	yes "" | pacman -Syu pulseaudio 
+	yes "" | pacman -Syu pavucontrol 
+	yes "" | pacman -Syu sudo 
+	yes "" | pacman -Syu firefox 
+	yes "" | pacman -Syu neofetch
+	systemctl enable lxdm
+}
+
 setRootPassword() {
 	# Set a root password
 	clear
@@ -61,17 +74,16 @@ finishMenu() {
 	echo " "
 	echo "Do you want to install anything extra?"
 	PS3="Choose an option's number and press ENTER to confirm: "
+	echo " "
 	options=("Yes" "No")
 	select opt in "${options[@]}"
 	do
 		case $opt in
 			"Yes")
 	 			bash archunextras.sh
-	 			read -p "wait before exiting, debug, chose yes"
 	 			exit
 				;;
 			"No")
-				read -p "wait before exiting, debug, chose no"
 				exit
 				;;
 			*) echo "Invalid option. $REPLY";;
@@ -84,7 +96,14 @@ if [ $SKIPEXTRAS == "no" ]; then
 	setRootPassword
 	finishMenu
 else
-	setRootPassword
+	if [ $INSTALLDEFAULTDE == "yes" ]; then
+		setRootPassword
+		installDefaultDE
+		return
+	else
+		setRootPassword
+		return
+	fi
 	return
 fi
 
