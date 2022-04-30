@@ -134,7 +134,6 @@ startAutomaticInstProcess() {
 	#sed -i "X i INSTALLDEFAULTDE='$INSTALLDEFAULTDE'" archun2.sh
 	#sed -i "X i AUTOMATICROOTACCOUNT='$AUTOMATICROOTACCOUNT'" archun2.sh
 	#sed -i "X i ROOTACCOUNTPASSWORD='$ROOTACCOUNTPASSWORD'" archun2.sh
-	
 	echo "!! WARNING !! - EVERYTHING will be ERASED from this device."
 	read -p "If you want to proceed, press ENTER. If not, type CTRL+C."
 	read -p "Last warning. Are you sure? Press ENTER to proceed."
