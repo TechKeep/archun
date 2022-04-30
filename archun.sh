@@ -177,6 +177,7 @@ mainMenu() {
 	echo "!! WARNING !! - Using this script will ERASE EVERYTHING on the device."
 	echo " "
 	PS3="Choose an option's number and press ENTER to confirm: "
+	echo " "
 	options=("I understand" "Quit")
 	select opt in "${options[@]}"
 	do
